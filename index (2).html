@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Air Navigation Quiz - 40 Questions</title>
+  <style>
+    :root {
+      --c1: #8ecae6;
+      --c2: #219ebc;
+      --c3: #023047;
+      --c4: #ffb703;
+      --c5: #fb8500;
+      --bg: #f6fbfe;
+      --card: #ffffff;
+      --text: #173042;
+      --muted: #5b7080;
+      --success-bg: #e8fff2;
+      --success-border: #2e8b57;
+      --error-bg: #fff1f0;
+      --error-border: #d64545;
+      --shadow: 0 10px 30px rgba(2,48,71,0.08);
+      --radius-xl: 22px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans Thai", "Helvetica Neue", Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(142,202,230,0.35), transparent 32%),
+        radial-gradient(circle at top right, rgba(255,183,3,0.20), transparent 22%),
+        linear-gradient(180deg, #fafdff 0%, #eef7fb 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(2,48,71,0.98), rgba(33,158,188,0.95));
+      color: white;
+      border-radius: 28px;
+      padding: 28px 28px 24px;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 12px;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0 0 6px 0;
+      font-size: clamp(1.6rem, 2vw, 2.4rem);
+      letter-spacing: 0.2px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: rgba(255,255,255,0.85);
+      font-size: 0.98rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+      font: inherit;
+    }
+
+    .btn {
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .btn-reset {
+      background: linear-gradient(135deg, var(--c4), var(--c5));
+      color: #2b1a00;
+    }
+
+    .btn-top {
+      background: rgba(255,255,255,0.12);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .progress-wrap {
+      margin-top: 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.9);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--c1), var(--c4));
+      transition: width 0.25s ease;
+      border-radius: 999px;
+    }
+
+    .quiz-grid {
+      margin-top: 24px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(2,48,71,0.08);
+      border-radius: var(--radius-xl);
+      padding: 22px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .q-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 48px;
+      padding: 6px 14px;
+      background: linear-gradient(135deg, rgba(142,202,230,0.25), rgba(33,158,188,0.18));
+      color: var(--c3);
+      border-radius: 999px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      border: 1px solid rgba(33,158,188,0.16);
+    }
+
+    .question {
+      font-size: 1.06rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      color: var(--c3);
+    }
+
+    .choices {
+      display: grid;
+      gap: 10px;
+    }
+
+    .choice {
+      width: 100%;
+      text-align: left;
+      padding: 14px 16px;
+      border-radius: var(--radius-lg);
+      background: #fff;
+      border: 1px solid rgba(2,48,71,0.12);
+      color: var(--text);
+      box-shadow: 0 3px 10px rgba(2,48,71,0.03);
+    }
+
+    .choice:hover:not(:disabled) {
+      border-color: rgba(33,158,188,0.45);
+      background: linear-gradient(180deg, #ffffff, #f7fdff);
+    }
+
+    .choice:disabled {
+      cursor: default;
+      opacity: 1;
+    }
+
+    .choice.correct {
+      border: 2px solid var(--success-border);
+      background: var(--success-bg);
+    }
+
+    .choice.wrong {
+      border: 2px solid var(--error-border);
+      background: var(--error-bg);
+    }
+
+    .choice.reveal {
+      border: 2px solid #0f6d85;
+      background: #eefbff;
+    }
+
+    .choice-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      margin-right: 10px;
+      background: linear-gradient(135deg, rgba(142,202,230,0.35), rgba(33,158,188,0.22));
+      color: var(--c3);
+      font-weight: 800;
+      font-size: 0.92rem;
+    }
+
+    .feedback {
+      margin-top: 14px;
+      border-radius: var(--radius-lg);
+      padding: 14px 16px;
+      display: none;
+      border: 1px solid rgba(2,48,71,0.08);
+    }
+
+    .feedback.show {
+      display: block;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .feedback.correct {
+      background: var(--success-bg);
+      border-color: rgba(46,139,87,0.35);
+    }
+
+    .feedback.wrong {
+      background: var(--error-bg);
+      border-color: rgba(214,69,69,0.28);
+    }
+
+    .feedback-title {
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        position: static;
+      }
+      .card {
+        padding: 18px;
+      }
+      .question {
+        font-size: 1rem;
+      }
+      .choice {
+        padding: 12px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <h1>Air Navigation Quiz</h1>
+          <p class="subtitle">40 ข้อ · เลือก A B C D · ตอบแล้วขึ้นถูก/ผิดทันที พร้อมเหตุผล · ไม่ shuffle · มีปุ่ม reset</p>
+        </div>
+        <div class="actions">
+          <button class="btn btn-reset" onclick="resetQuiz()">Reset Quiz</button>
+          <button class="btn btn-top" onclick="window.scrollTo({top:0, behavior:'smooth'})">Back to Top</button>
+        </div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span id="answeredText">Answered: 0 / 46</span>
+          <span id="scoreText">Correct: 0</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+      </div>
+    </section>
+
+    <main class="quiz-grid" id="quiz"></main>
+
+    <div class="footer-note">
+      Designed with a clean rounded look using your requested palette: #8ecae6 · #219ebc · #023047 · #ffb703 · #fb8500
+    </div>
+  </div>
+
+  <script>
+    const questions = [
+  {
+    "question": "Which set correctly lists the cardinal directions?",
+    "choices": [
+      {
+        "en": "North, East, South, West",
+        "th": "เหนือ ตะวันออก ใต้ ตะวันตก"
+      },
+      {
+        "en": "North, West, South, East",
+        "th": "เหนือ ตะวันตก ใต้ ตะวันออก"
+      },
+      {
+        "en": "East, North, West, South",
+        "th": "ตะวันออก เหนือ ตะวันตก ใต้"
+      },
+      {
+        "en": "North, South, East, Northeast",
+        "th": "เหนือ ใต้ ตะวันออก ตะวันออกเฉียงเหนือ"
+      }
+    ],
+    "answer": 0,
+    "explanation": "Cardinal directions are the four main points of a compass: North, East, South, and West.",
+    "question_th": "ชุดใดแสดงทิศหลัก (Cardinal Directions) ได้ถูกต้อง"
+  },
+  {
+    "question": "What is a great circle?",
+    "choices": [
+      {
+        "en": "A circle on Earth that touches only the Equator",
+        "th": "วงกลมบนโลกที่สัมผัสเฉพาะเส้นศูนย์สูตร"
+      },
+      {
+        "en": "A circle on a sphere whose center is the same as the sphere’s center",
+        "th": "วงกลมบนทรงกลมที่มีจุดศูนย์กลางเดียวกับทรงกลมนั้น"
+      },
+      {
+        "en": "Any circle drawn parallel to the Equator",
+        "th": "วงกลมใด ๆ ที่วาดขนานกับเส้นศูนย์สูตร"
+      },
+      {
+        "en": "A curved route that always crosses meridians at the same angle",
+        "th": "เส้นโค้งที่ตัดเส้นเมริเดียนทุกเส้นด้วยมุมเท่ากัน"
+      }
+    ],
+    "answer": 1,
+    "explanation": "A great circle is drawn on the surface of a sphere and has the center of the sphere as its origin.",
+    "question_th": "Great circle คืออะไร"
+  },
+  {
+    "question": "Why is a great circle important in air navigation?",
+    "choices": [
+      {
+        "en": "It always follows lines of latitude",
+        "th": "เพราะมันอยู่ตามเส้นละติจูดเสมอ"
+      },
+      {
+        "en": "It is easiest to draw on a flat chart",
+        "th": "เพราะวาดลงบนแผนที่ราบได้ง่ายที่สุด"
+      },
+      {
+        "en": "It gives the shortest distance between two points on a sphere",
+        "th": "เพราะให้ระยะทางสั้นที่สุดระหว่างสองจุดบนทรงกลม"
+      },
+      {
+        "en": "It always points to magnetic north",
+        "th": "เพราะชี้ไปยังทิศเหนือแม่เหล็กเสมอ"
+      }
+    ],
+    "answer": 2,
+    "explanation": "The line connecting two points along a great circle is the shortest distance between them on a sphere.",
+    "question_th": "เหตุใด great circle จึงสำคัญต่อการเดินอากาศ"
+  },
+  {
+    "question": "A small circle is best defined as:",
+    "choices": [
+      {
+        "en": "Any circle on Earth smaller than the Equator",
+        "th": "วงกลมใด ๆ บนโลกที่เล็กกว่าเส้นศูนย์สูตร"
+      },
+      {
+        "en": "A circle on a sphere that does not have the sphere’s center as its origin",
+        "th": "วงกลมบนทรงกลมที่ไม่ได้มีจุดศูนย์กลางเดียวกับทรงกลม"
+      },
+      {
+        "en": "A circle drawn only in the Northern Hemisphere",
+        "th": "วงกลมที่วาดเฉพาะในซีกโลกเหนือ"
+      },
+      {
+        "en": "A circle that passes through both poles",
+        "th": "วงกลมที่ผ่านขั้วโลกทั้งสอง"
+      }
+    ],
+    "answer": 1,
+    "explanation": "A small circle is any circle on the surface of a sphere that does not share the sphere’s center.",
+    "question_th": "ข้อใดให้นิยามของ small circle ได้ดีที่สุด"
+  },
+  {
+    "question": "Which statement about the Equator is correct?",
+    "choices": [
+      {
+        "en": "It is a small circle dividing East and West hemispheres",
+        "th": "เป็น small circle ที่แบ่งโลกตะวันออกและตะวันตก"
+      },
+      {
+        "en": "It is a great circle dividing the Earth into Northern and Southern Hemispheres",
+        "th": "เป็น great circle ที่แบ่งโลกออกเป็นซีกเหนือและซีกใต้"
+      },
+      {
+        "en": "It is half of a great circle joining the poles",
+        "th": "เป็นครึ่งหนึ่งของ great circle ที่เชื่อมขั้วโลก"
+      },
+      {
+        "en": "It is a rhumb line running north-south",
+        "th": "เป็น rhumb line ที่พาดตามแนวเหนือ-ใต้"
+      }
+    ],
+    "answer": 1,
+    "explanation": "The Equator is a great circle that cuts the Earth in half into Northern and Southern Hemispheres.",
+    "question_th": "ข้อใดกล่าวถึงเส้นศูนย์สูตร (Equator) ได้ถูกต้อง"
+  },
+  {
+    "question": "A meridian is:",
+    "choices": [
+      {
+        "en": "A parallel of latitude",
+        "th": "เส้นขนานละติจูด"
+      },
+      {
+        "en": "A great circle passing east-west",
+        "th": "great circle ที่พาดตะวันออก-ตะวันตก"
+      },
+      {
+        "en": "Half of a great circle joining the poles",
+        "th": "ครึ่งหนึ่งของ great circle ที่เชื่อมขั้วโลก"
+      },
+      {
+        "en": "A line of zero magnetic variation",
+        "th": "เส้นที่มีค่า magnetic variation เป็นศูนย์"
+      }
+    ],
+    "answer": 2,
+    "explanation": "A meridian is half of a great circle joining the poles and running north-south.",
+    "question_th": "Meridian คืออะไร"
+  },
+  {
+    "question": "How do meridians meet the Equator?",
+    "choices": [
+      {
+        "en": "At right angles",
+        "th": "ตัดกันเป็นมุมฉาก"
+      },
+      {
+        "en": "At 45° angles",
+        "th": "ตัดกันเป็นมุม 45 องศา"
+      },
+      {
+        "en": "They never meet",
+        "th": "ไม่ตัดกันเลย"
+      },
+      {
+        "en": "Parallel to it",
+        "th": "ขนานกับเส้นศูนย์สูตร"
+      }
+    ],
+    "answer": 0,
+    "explanation": "Meridians cut the Equator at right angles.",
+    "question_th": "เส้นเมริเดียนตัดกับเส้นศูนย์สูตรอย่างไร"
+  },
+  {
+    "question": "Parallels of latitude are:",
+    "choices": [
+      {
+        "en": "All great circles",
+        "th": "ทั้งหมดเป็น great circle"
+      },
+      {
+        "en": "All small circles except the Equator",
+        "th": "ทั้งหมดเป็น small circle ยกเว้นเส้นศูนย์สูตร"
+      },
+      {
+        "en": "Half great circles joining the poles",
+        "th": "เป็นครึ่ง great circle ที่เชื่อมขั้วโลก"
+      },
+      {
+        "en": "Lines of equal variation",
+        "th": "เป็นเส้นที่มี variation เท่ากัน"
+      }
+    ],
+    "answer": 1,
+    "explanation": "Parallels of latitude run east-west and are all small circles except the Equator.",
+    "question_th": "เส้นขนานละติจูดมีลักษณะอย่างไร"
+  },
+  {
+    "question": "Parallels of latitude run in which direction?",
+    "choices": [
+      {
+        "en": "North-South",
+        "th": "เหนือ-ใต้"
+      },
+      {
+        "en": "East-West",
+        "th": "ตะวันออก-ตะวันตก"
+      },
+      {
+        "en": "Northeast-Southwest",
+        "th": "ตะวันออกเฉียงเหนือ-ตะวันตกเฉียงใต้"
+      },
+      {
+        "en": "Toward the magnetic pole",
+        "th": "มุ่งไปยังขั้วแม่เหล็ก"
+      }
+    ],
+    "answer": 1,
+    "explanation": "Parallels of latitude always run in an east-west direction.",
+    "question_th": "เส้นขนานละติจูดพาดไปในทิศทางใด"
+  },
+  {
+    "question": "A rhumb line crosses all meridians at:",
+    "choices": [
+      {
+        "en": "Right angles only",
+        "th": "มุมฉากเท่านั้น"
+      },
+      {
+        "en": "The same angle",
+        "th": "มุมเท่ากันเสมอ"
+      },
+      {
+        "en": "Random angles",
+        "th": "มุมไม่แน่นอน"
+      },
+      {
+        "en": "Angles that depend on latitude only",
+        "th": "มุมที่ขึ้นกับละติจูดเท่านั้น"
+      }
+    ],
+    "answer": 1,
+    "explanation": "A rhumb line is a regularly curved line that cuts all meridians at the same angle.",
+    "question_th": "Rhumb line ตัดเส้นเมริเดียนทุกเส้นด้วยลักษณะใด"
+  },
+  {
+    "question": "When can a rhumb line also be the shortest distance between two points?",
+    "choices": [
+      {
+        "en": "Always",
+        "th": "เสมอ"
+      },
+      {
+        "en": "Only when it is a meridian or a great circle",
+        "th": "เฉพาะเมื่อมันเป็น meridian หรือ great circle"
+      },
+      {
+        "en": "Only over short distances above 200 NM",
+        "th": "เฉพาะระยะสั้นมากกว่า 200 ไมล์ทะเล"
+      },
+      {
+        "en": "Only at the Equator",
+        "th": "เฉพาะที่เส้นศูนย์สูตร"
+      }
+    ],
+    "answer": 1,
+    "explanation": "A rhumb line is not normally the shortest distance unless it is also a meridian or a great circle.",
+    "question_th": "Rhumb line จะเป็นระยะทางสั้นที่สุดระหว่างสองจุดได้เมื่อใด"
+  },
+  {
+    "question": "In navigation, 'course' means:",
+    "choices": [
+      {
+        "en": "The direction the nose of the aircraft is pointing",
+        "th": "ทิศที่หัวเครื่องบินชี้อยู่"
+      },
+      {
+        "en": "The path the aircraft has already flown",
+        "th": "เส้นทางที่เครื่องบินบินผ่านมาแล้ว"
+      },
+      {
+        "en": "The intended track",
+        "th": "แนวเส้นทางที่ตั้งใจจะบิน"
+      },
+      {
+        "en": "The difference between true north and magnetic north",
+        "th": "ผลต่างระหว่าง true north กับ magnetic north"
+      }
+    ],
+    "answer": 2,
+    "explanation": "Course is the intended track to be followed.",
+    "question_th": "ในการเดินอากาศ คำว่า course หมายถึงอะไร"
+  },
+  {
+    "question": "In navigation, 'heading' means:",
+    "choices": [
+      {
+        "en": "The intended route over the ground",
+        "th": "เส้นทางที่ตั้งใจจะไปเหนือพื้นโลก"
+      },
+      {
+        "en": "The direction in which the fore-and-aft axis of the aircraft is pointing",
+        "th": "ทิศที่แนวยาวของเครื่องบินกำลังชี้อยู่"
+      },
+      {
+        "en": "The shortest route between two points",
+        "th": "เส้นทางที่สั้นที่สุดระหว่างสองจุด"
+      },
+      {
+        "en": "The angle between compass north and true north",
+        "th": "มุมระหว่าง compass north กับ true north"
+      }
+    ],
+    "answer": 1,
+    "explanation": "Heading is the direction the aircraft’s longitudinal axis is pointing.",
+    "question_th": "ในการเดินอากาศ คำว่า heading หมายถึงอะไร"
+  },
+  {
+    "question": "The term 'track' refers to:",
+    "choices": [
+      {
+        "en": "The intended route before departure",
+        "th": "เส้นทางที่วางแผนไว้ก่อนออกเดินทาง"
+      },
+      {
+        "en": "The flight path the aircraft has followed",
+        "th": "เส้นทางการบินจริงที่เครื่องบินได้บินผ่านไป"
+      },
+      {
+        "en": "The magnetic direction shown on a chart",
+        "th": "ทิศแม่เหล็กที่แสดงบนแผนที่"
+      },
+      {
+        "en": "The runway centerline during landing",
+        "th": "แนวกึ่งกลางทางวิ่งขณะลงจอด"
+      }
+    ],
+    "answer": 1,
+    "explanation": "Track is the actual path the aircraft has followed over the ground.",
+    "question_th": "คำว่า track หมายถึงอะไร"
+  },
+  {
+    "question": "True direction is referenced to:",
+    "choices": [
+      {
+        "en": "Compass north",
+        "th": "ทิศเหนือเข็มทิศ"
+      },
+      {
+        "en": "Magnetic north",
+        "th": "ทิศเหนือแม่เหล็ก"
+      },
+      {
+        "en": "The Geographic North Pole",
+        "th": "ขั้วโลกเหนือทางภูมิศาสตร์"
+      },
+      {
+        "en": "The nearest VOR radial",
+        "th": "VOR radial ที่ใกล้ที่สุด"
+      }
+    ],
+    "answer": 2,
+    "explanation": "True direction uses the Geographic North Pole as its reference.",
+    "question_th": "True direction อ้างอิงจากอะไร"
+  },
+  {
+    "question": "Why is magnetic direction commonly used in aircraft?",
+    "choices": [
+      {
+        "en": "Because true direction can be determined directly more easily in flight",
+        "th": "เพราะหา true direction ได้โดยตรงง่ายกว่าในขณะบิน"
+      },
+      {
+        "en": "Because it is not possible to directly determine true direction in an aircraft",
+        "th": "เพราะไม่สามารถหาค่า true direction ได้โดยตรงในอากาศยาน"
+      },
+      {
+        "en": "Because magnetic north never changes",
+        "th": "เพราะทิศเหนือแม่เหล็กไม่เคยเปลี่ยน"
+      },
+      {
+        "en": "Because charts do not show true north",
+        "th": "เพราะแผนที่ไม่แสดง true north"
+      }
+    ],
+    "answer": 1,
+    "explanation": "The notes state that true direction cannot be directly determined in an aircraft, so magnetic direction is used.",
+    "question_th": "เหตุใดจึงนิยมใช้ magnetic direction ในอากาศยาน"
+  },
+  {
+    "question": "Variation is the angular difference between:",
+    "choices": [
+      {
+        "en": "Compass north and magnetic north",
+        "th": "compass north กับ magnetic north"
+      },
+      {
+        "en": "True north and the aircraft heading",
+        "th": "true north กับ heading ของเครื่องบิน"
+      },
+      {
+        "en": "Magnetic north and true north",
+        "th": "magnetic north กับ true north"
+      },
+      {
+        "en": "Course and track",
+        "th": "course กับ track"
+      }
+    ],
+    "answer": 2,
+    "explanation": "Variation is the angle between magnetic north and true north at a given point.",
+    "question_th": "Variation คือความต่างเชิงมุมระหว่างอะไร"
+  },
+  {
+    "question": "Variation is measured in degrees with which suffixes?",
+    "choices": [
+      {
+        "en": "N or S",
+        "th": "N หรือ S"
+      },
+      {
+        "en": "L or R",
+        "th": "L หรือ R"
+      },
+      {
+        "en": "W or E",
+        "th": "W หรือ E"
+      },
+      {
+        "en": "T or M",
+        "th": "T หรือ M"
+      }
+    ],
+    "answer": 2,
+    "explanation": "Variation is expressed in degrees West (W) or East (E).",
+    "question_th": "Variation วัดเป็นองศาพร้อมตัวอักษรท้ายแบบใด"
+  },
+  {
+    "question": "Lines joining places of equal magnetic variation are called:",
+    "choices": [
+      {
+        "en": "Rhumb lines",
+        "th": "Rhumb lines"
+      },
+      {
+        "en": "Isogonals",
+        "th": "Isogonals"
+      },
+      {
+        "en": "Meridians",
+        "th": "Meridians"
+      },
+      {
+        "en": "Parallels",
+        "th": "Parallels"
+      }
+    ],
+    "answer": 1,
+    "explanation": "Places of equal magnetic variation are connected by isogonals.",
+    "question_th": "เส้นที่เชื่อมตำแหน่งซึ่งมี magnetic variation เท่ากันเรียกว่าอะไร"
+  },
+  {
+    "question": "The agonic line is:",
+    "choices": [
+      {
+        "en": "A line where compass deviation is maximum",
+        "th": "เส้นที่ compass deviation สูงสุด"
+      },
+      {
+        "en": "A line where variation is zero",
+        "th": "เส้นที่ variation เป็นศูนย์"
+      },
+      {
+        "en": "A line connecting the poles",
+        "th": "เส้นที่เชื่อมขั้วโลก"
+      },
+      {
+        "en": "A line of constant altitude",
+        "th": "เส้นที่มีระดับความสูงคงที่"
+      }
+    ],
+    "answer": 1,
+    "explanation": "The agonic line is the isogonal where magnetic variation is zero.",
+    "question_th": "Agonic line คืออะไร"
+  },
+  {
+    "question": "Deviation is the angle between:",
+    "choices": [
+      {
+        "en": "Compass north and real magnetic north",
+        "th": "compass north กับ magnetic north ที่แท้จริง"
+      },
+      {
+        "en": "True north and magnetic north",
+        "th": "true north กับ magnetic north"
+      },
+      {
+        "en": "Course and track",
+        "th": "course กับ track"
+      },
+      {
+        "en": "Heading and track",
+        "th": "heading กับ track"
+      }
+    ],
+    "answer": 0,
+    "explanation": "Deviation is the angle between what the compass indicates as north and real magnetic north.",
+    "question_th": "Deviation คือมุมระหว่างอะไร"
+  },
+  {
+    "question": "The operation of an aircraft in flight must comply with the general rules and additionally with:",
+    "choices": [
+      {
+        "en": "Either VFR or IFR",
+        "th": "VFR หรือ IFR อย่างใดอย่างหนึ่ง"
+      },
+      {
+        "en": "Only VFR",
+        "th": "เฉพาะ VFR"
+      },
+      {
+        "en": "Only IFR",
+        "th": "เฉพาะ IFR"
+      },
+      {
+        "en": "Only national military regulations",
+        "th": "เฉพาะข้อบังคับทางทหารของรัฐ"
+      }
+    ],
+    "answer": 0,
+    "explanation": "In flight, aircraft must comply with the general rules and either the Visual Flight Rules or Instrument Flight Rules.",
+    "question_th": "การปฏิบัติการของอากาศยานขณะบินต้องเป็นไปตาม general rules และเพิ่มเติมตามข้อใด"
+  },
+  {
+    "question": "Which of the following is listed as an early navigation system associated with VFR compliance?",
+    "choices": [
+      {
+        "en": "FMS",
+        "th": "FMS"
+      },
+      {
+        "en": "INS",
+        "th": "INS"
+      },
+      {
+        "en": "Pilotage",
+        "th": "Pilotage"
+      },
+      {
+        "en": "Autopilot",
+        "th": "Autopilot"
+      }
+    ],
+    "answer": 2,
+    "explanation": "The notes list Pilotage, Celestial Navigation, and Dead Reckoning as early navigation methods.",
+    "question_th": "ข้อใดเป็นวิธีการเดินอากาศยุคแรกที่เกี่ยวข้องกับการปฏิบัติตาม VFR"
+  },
+  {
+    "question": "Which method is navigation by reference to landmarks or checkpoints?",
+    "choices": [
+      {
+        "en": "Dead reckoning",
+        "th": "Dead reckoning"
+      },
+      {
+        "en": "Pilotage",
+        "th": "Pilotage"
+      },
+      {
+        "en": "INS",
+        "th": "INS"
+      },
+      {
+        "en": "GNSS",
+        "th": "GNSS"
+      }
+    ],
+    "answer": 1,
+    "explanation": "Pilotage uses visible landmarks such as roads, rivers, lakes, railroads, and power lines.",
+    "question_th": "วิธีใดคือการเดินอากาศโดยอ้างอิงจุดสังเกตหรือจุดตรวจสอบ"
+  },
+  {
+    "question": "Dead reckoning is based primarily on:",
+    "choices": [
+      {
+        "en": "VOR radials and DME arcs",
+        "th": "VOR radials และ DME arcs"
+      },
+      {
+        "en": "Time, airspeed, distance, and direction",
+        "th": "เวลา ความเร็วอากาศ ระยะทาง และทิศทาง"
+      },
+      {
+        "en": "Satellite signals and augmentation",
+        "th": "สัญญาณดาวเทียมและระบบเสริม"
+      },
+      {
+        "en": "Runway markings and visual references",
+        "th": "เครื่องหมายทางวิ่งและจุดอ้างอิงทางสายตา"
+      }
+    ],
+    "answer": 1,
+    "explanation": "Dead reckoning uses computations based on time, airspeed, distance, and direction, then adjusts for wind.",
+    "question_th": "Dead reckoning อาศัยข้อมูลหลักจากอะไร"
+  },
+  {
+    "question": "When wind is applied to dead reckoning calculations, the useful resulting values are:",
+    "choices": [
+      {
+        "en": "Variation and deviation",
+        "th": "Variation และ deviation"
+      },
+      {
+        "en": "Latitude and longitude",
+        "th": "Latitude และ longitude"
+      },
+      {
+        "en": "Heading and ground speed",
+        "th": "Heading และความเร็วภาคพื้น"
+      },
+      {
+        "en": "Radial and bearing",
+        "th": "Radial และ bearing"
+      }
+    ],
+    "answer": 2,
+    "explanation": "The notes state that after wind correction, dead reckoning yields heading and ground speed.",
+    "question_th": "เมื่อปรับ dead reckoning ด้วยผลของลมแล้ว ค่าที่ได้ซึ่งมีประโยชน์คืออะไร"
+  },
+  {
+    "question": "NDB stands for:",
+    "choices": [
+      {
+        "en": "Non-Directional Beacon",
+        "th": "เครื่องช่วยเดินอากาศแบบไม่กำหนดทิศทาง"
+      },
+      {
+        "en": "National Data Beacon",
+        "th": "บีคอนข้อมูลแห่งชาติ"
+      },
+      {
+        "en": "Navigational Distance Base",
+        "th": "ฐานระยะทางการเดินอากาศ"
+      },
+      {
+        "en": "North Deviation Beacon",
+        "th": "บีคอนเบี่ยงเบนทิศเหนือ"
+      }
+    ],
+    "answer": 0,
+    "explanation": "NDB means Non-Directional Beacon.",
+    "question_th": "NDB ย่อมาจากอะไร"
+  },
+  {
+    "question": "The airborne equipment used with an NDB is the:",
+    "choices": [
+      {
+        "en": "DME",
+        "th": "DME"
+      },
+      {
+        "en": "ILS",
+        "th": "ILS"
+      },
+      {
+        "en": "ADF",
+        "th": "ADF"
+      },
+      {
+        "en": "FMS",
+        "th": "FMS"
+      }
+    ],
+    "answer": 2,
+    "explanation": "An NDB is used with the Automatic Direction Finder (ADF) in the aircraft.",
+    "question_th": "อุปกรณ์บนอากาศยานที่ใช้ร่วมกับ NDB คืออะไร"
+  },
+  {
+    "question": "An NDB transmits radio energy:",
+    "choices": [
+      {
+        "en": "Only along selected radials",
+        "th": "เฉพาะตามเรเดียลที่กำหนด"
+      },
+      {
+        "en": "Equally in all directions",
+        "th": "เท่ากันทุกทิศทาง"
+      },
+      {
+        "en": "Only to aircraft above 10,000 feet",
+        "th": "เฉพาะอากาศยานที่สูงกว่า 10,000 ฟุต"
+      },
+      {
+        "en": "Only along the runway centerline",
+        "th": "เฉพาะตามแนวกึ่งกลางทางวิ่ง"
+      }
+    ],
+    "answer": 1,
+    "explanation": "NDBs are ground-based transmitters that radiate equally in all directions.",
+    "question_th": "NDB แผ่พลังงานวิทยุอย่างไร"
+  },
+  {
+    "question": "Which frequency band is associated with NDB operation?",
+    "choices": [
+      {
+        "en": "LF/MF",
+        "th": "LF/MF"
+      },
+      {
+        "en": "VHF only",
+        "th": "เฉพาะ VHF"
+      },
+      {
+        "en": "UHF only",
+        "th": "เฉพาะ UHF"
+      },
+      {
+        "en": "SHF only",
+        "th": "เฉพาะ SHF"
+      }
+    ],
+    "answer": 0,
+    "explanation": "NDB operates in the LF/MF bands, with frequencies roughly from 190 to 1750 kHz.",
+    "question_th": "ย่านความถี่ใดเกี่ยวข้องกับการทำงานของ NDB"
+  },
+  {
+    "question": "VOR stands for:",
+    "choices": [
+      {
+        "en": "Very Offset Range",
+        "th": "ช่วงเบี่ยงเบนสูง"
+      },
+      {
+        "en": "VHF Omnidirectional Radio Range",
+        "th": "สถานีวิทยุ VHF แบบรอบทิศทาง"
+      },
+      {
+        "en": "Variable Omni Receiver",
+        "th": "เครื่องรับรอบทิศแบบแปรผัน"
+      },
+      {
+        "en": "Visual Orientation Radar",
+        "th": "เรดาร์กำหนดทิศทางด้วยสายตา"
+      }
+    ],
+    "answer": 1,
+    "explanation": "VOR means VHF Omnidirectional Radio Range.",
+    "question_th": "VOR ย่อมาจากอะไร"
+  },
+  {
+    "question": "A VOR radial is the:",
+    "choices": [
+      {
+        "en": "Magnetic bearing from the station to the aircraft",
+        "th": "ทิศแบริงแม่เหล็กจากสถานีไปยังอากาศยาน"
+      },
+      {
+        "en": "True bearing from the aircraft to the station",
+        "th": "ทิศแบริงจริงจากอากาศยานไปยังสถานี"
+      },
+      {
+        "en": "Compass heading of the station",
+        "th": "เข็มทิศ heading ของสถานี"
+      },
+      {
+        "en": "Glide path angle on approach",
+        "th": "มุม glide path ขณะเข้าร่อน"
+      }
+    ],
+    "answer": 0,
+    "explanation": "The VOR signal provides magnetic bearing from the station to the aircraft, called the radial.",
+    "question_th": "VOR radial คืออะไร"
+  },
+  {
+    "question": "VOR transmissions are subject to line-of-sight limitations because they operate in the:",
+    "choices": [
+      {
+        "en": "LF band",
+        "th": "ย่าน LF"
+      },
+      {
+        "en": "MF band",
+        "th": "ย่าน MF"
+      },
+      {
+        "en": "VHF band",
+        "th": "ย่าน VHF"
+      },
+      {
+        "en": "ELF band",
+        "th": "ย่าน ELF"
+      }
+    ],
+    "answer": 2,
+    "explanation": "VOR uses VHF, so its usable range depends on line of sight and therefore on altitude.",
+    "question_th": "เหตุใดสัญญาณ VOR จึงมีข้อจำกัดแบบ line-of-sight"
+  },
+  {
+    "question": "Terminal VOR (T-VOR) typically provides service out to about:",
+    "choices": [
+      {
+        "en": "15 NM",
+        "th": "15 ไมล์ทะเล"
+      },
+      {
+        "en": "25 NM",
+        "th": "25 ไมล์ทะเล"
+      },
+      {
+        "en": "50 NM",
+        "th": "50 ไมล์ทะเล"
+      },
+      {
+        "en": "200 NM",
+        "th": "200 ไมล์ทะเล"
+      }
+    ],
+    "answer": 1,
+    "explanation": "The notes give Terminal VOR range as 25 NM.",
+    "question_th": "Terminal VOR (T-VOR) โดยทั่วไปให้บริการได้ประมาณกี่ไมล์ทะเล"
+  },
+  {
+    "question": "DME primarily gives the pilot:",
+    "choices": [
+      {
+        "en": "Magnetic heading",
+        "th": "heading แม่เหล็ก"
+      },
+      {
+        "en": "True course",
+        "th": "course จริง"
+      },
+      {
+        "en": "Slant range distance",
+        "th": "ระยะ slant range"
+      },
+      {
+        "en": "Wind direction",
+        "th": "ทิศทางลม"
+      }
+    ],
+    "answer": 2,
+    "explanation": "DME measures slant range distance from the aircraft to the ground station.",
+    "question_th": "DME ให้ข้อมูลหลักใดแก่นักบิน"
+  },
+  {
+    "question": "DME operates in which frequency band?",
+    "choices": [
+      {
+        "en": "LF",
+        "th": "LF"
+      },
+      {
+        "en": "MF",
+        "th": "MF"
+      },
+      {
+        "en": "VHF",
+        "th": "VHF"
+      },
+      {
+        "en": "UHF",
+        "th": "UHF"
+      }
+    ],
+    "answer": 3,
+    "explanation": "DME operates in the UHF band, approximately 960 to 1215 MHz.",
+    "question_th": "DME ทำงานในย่านความถี่ใด"
+  },
+  {
+    "question": "ILS is best described as:",
+    "choices": [
+      {
+        "en": "A non-precision en-route navigation aid",
+        "th": "เครื่องช่วยเดินอากาศระหว่างทางแบบไม่แม่นยำ"
+      },
+      {
+        "en": "A precision runway approach aid",
+        "th": "เครื่องช่วยร่อนลงทางวิ่งแบบแม่นยำ"
+      },
+      {
+        "en": "A satellite-only navigation system",
+        "th": "ระบบเดินอากาศด้วยดาวเทียมเท่านั้น"
+      },
+      {
+        "en": "A dead reckoning correction device",
+        "th": "อุปกรณ์แก้ไข dead reckoning"
+      }
+    ],
+    "answer": 1,
+    "explanation": "The Instrument Landing System is a precision runway approach aid.",
+    "question_th": "ข้อใดอธิบาย ILS ได้เหมาะสมที่สุด"
+  },
+  {
+    "question": "Which ILS component provides azimuth guidance along the extended runway centerline?",
+    "choices": [
+      {
+        "en": "Glideslope",
+        "th": "Glideslope"
+      },
+      {
+        "en": "Marker beacon",
+        "th": "Marker beacon"
+      },
+      {
+        "en": "Localiser",
+        "th": "Localiser"
+      },
+      {
+        "en": "DME",
+        "th": "DME"
+      }
+    ],
+    "answer": 2,
+    "explanation": "The Localiser provides lateral/azimuth guidance aligned with the runway centerline.",
+    "question_th": "องค์ประกอบใดของ ILS ให้การนำร่องด้าน azimuth ตามแนวต่อของ centerline ทางวิ่ง"
+  },
+  {
+    "question": "Which ILS component provides the correct vertical descent profile?",
+    "choices": [
+      {
+        "en": "Localiser",
+        "th": "Localiser"
+      },
+      {
+        "en": "Glideslope",
+        "th": "Glideslope"
+      },
+      {
+        "en": "Outer marker",
+        "th": "Outer marker"
+      },
+      {
+        "en": "ADF",
+        "th": "ADF"
+      }
+    ],
+    "answer": 1,
+    "explanation": "The Glideslope gives vertical guidance during the approach.",
+    "question_th": "องค์ประกอบใดของ ILS ให้แนวร่อนลงทางดิ่งที่ถูกต้อง"
+  },
+  {
+    "question": "Existing core GNSS constellations generally require augmentation for civil aviation in the form of:",
+    "choices": [
+      {
+        "en": "Only VOR and DME",
+        "th": "เฉพาะ VOR และ DME"
+      },
+      {
+        "en": "ABAS, GBAS, or SBAS",
+        "th": "ABAS, GBAS หรือ SBAS"
+      },
+      {
+        "en": "Only ADF and NDB",
+        "th": "เฉพาะ ADF และ NDB"
+      },
+      {
+        "en": "Marker beacons only",
+        "th": "เฉพาะ marker beacons"
+      }
+    ],
+    "answer": 1,
+    "explanation": "The notes state that core GNSS constellations require augmentation such as ABAS, GBAS, or SBAS.",
+    "question_th": "กลุ่มดาวเทียม GNSS หลักที่มีอยู่โดยทั่วไปต้องการระบบเสริมสำหรับการบินพลเรือนในรูปแบบใด"
+  },
+  {
+    "question": "In WGS-84, the parameter h represents:",
+    "choices": [
+      {
+        "en": "Magnetic height above mean sea level",
+        "th": "ความสูงแม่เหล็กเหนือระดับน้ำทะเลปานกลาง"
+      },
+      {
+        "en": "Geometric (ellipsoidal) height above the WGS-84 ellipsoid",
+        "th": "ความสูงเชิงเรขาคณิต (ellipsoidal height) เหนือ ellipsoid ของ WGS-84"
+      },
+      {
+        "en": "Only pressure altitude",
+        "th": "ความสูงความกดอากาศเท่านั้น"
+      },
+      {
+        "en": "Height of the geoid above the Earth’s core",
+        "th": "ความสูงของ geoid เหนือแกนกลางโลก"
+      }
+    ],
+    "answer": 1,
+    "explanation": "In WGS-84, h is the geometric or ellipsoidal height above the reference ellipsoid.",
+    "question_th": "ใน WGS-84 พารามิเตอร์ h หมายถึงอะไร"
+  },
+  {
+    "question": "What does a Navigation Specification define in PBN?",
+    "question_th": "Navigation Specification ใน PBN กำหนดอะไร",
+    "choices": [
+      {
+        "en": "Only aircraft speed and altitude",
+        "th": "เฉพาะความเร็วและความสูงของอากาศยาน"
+      },
+      {
+        "en": "Performance requirements such as accuracy, integrity, and continuity",
+        "th": "ข้อกำหนดด้านประสิทธิภาพ เช่น accuracy, integrity และ continuity"
+      },
+      {
+        "en": "Only ground-based navigation aids",
+        "th": "เฉพาะเครื่องช่วยนำร่องภาคพื้น"
+      },
+      {
+        "en": "Only pilot procedures",
+        "th": "เฉพาะขั้นตอนของนักบิน"
+      }
+    ],
+    "answer": 1,
+    "explanation": "Navigation Specification defines required performance like accuracy, integrity, and continuity."
+  },
+  {
+    "question": "Which of the following is included in Navigation Specification?",
+    "question_th": "ข้อใดเป็นองค์ประกอบของ Navigation Specification",
+    "choices": [
+      {
+        "en": "Aircraft display of distance and bearing",
+        "th": "การแสดงผลระยะทางและทิศทางบนอากาศยาน"
+      },
+      {
+        "en": "Fuel consumption rate",
+        "th": "อัตราการใช้น้ำมันเชื้อเพลิง"
+      },
+      {
+        "en": "Cabin pressure system",
+        "th": "ระบบความดันในห้องโดยสาร"
+      },
+      {
+        "en": "Weather radar only",
+        "th": "เฉพาะเรดาร์อากาศ"
+      }
+    ],
+    "answer": 0,
+    "explanation": "Navigation Specification includes required functions like distance and bearing display."
+  },
+  {
+    "question": "Navigation Infrastructure refers to:",
+    "question_th": "Navigation Infrastructure หมายถึงอะไร",
+    "choices": [
+      {
+        "en": "Only pilot training systems",
+        "th": "เฉพาะระบบฝึกนักบิน"
+      },
+      {
+        "en": "Ground or space-based navigation aids",
+        "th": "เครื่องช่วยนำร่องทั้งภาคพื้นและอวกาศ"
+      },
+      {
+        "en": "Only GNSS satellites",
+        "th": "เฉพาะดาวเทียม GNSS"
+      },
+      {
+        "en": "Airport lighting systems",
+        "th": "ระบบไฟสนามบิน"
+      }
+    ],
+    "answer": 1,
+    "explanation": "It includes both ground-based (VOR/DME) and space-based (GNSS) NAVAIDs."
+  },
+  {
+    "question": "Which is an example of ground-based NAVAID in PBN?",
+    "question_th": "ข้อใดเป็นตัวอย่าง NAVAID ภาคพื้นใน PBN",
+    "choices": [
+      {
+        "en": "GNSS",
+        "th": "GNSS"
+      },
+      {
+        "en": "VOR",
+        "th": "VOR"
+      },
+      {
+        "en": "SBAS",
+        "th": "SBAS"
+      },
+      {
+        "en": "ABAS",
+        "th": "ABAS"
+      }
+    ],
+    "answer": 1,
+    "explanation": "VOR and DME are conventional ground-based navigation aids."
+  },
+  {
+    "question": "What is a Navigation Application in PBN?",
+    "question_th": "Navigation Application ใน PBN คืออะไร",
+    "choices": [
+      {
+        "en": "Aircraft maintenance procedure",
+        "th": "ขั้นตอนการซ่อมบำรุงอากาศยาน"
+      },
+      {
+        "en": "Use of navigation spec + infrastructure for routes/procedures",
+        "th": "การใช้ Navigation Specification และโครงสร้างนำร่องกับเส้นทาง/ขั้นตอนบิน"
+      },
+      {
+        "en": "Only GNSS signal processing",
+        "th": "เฉพาะการประมวลผลสัญญาณ GNSS"
+      },
+      {
+        "en": "Weather forecasting system",
+        "th": "ระบบพยากรณ์อากาศ"
+      }
+    ],
+    "answer": 1,
+    "explanation": "Navigation Application uses specs + infrastructure for ATS routes, approaches, etc."
+  }
+];
+
+    const quizEl = document.getElementById('quiz');
+    const answeredText = document.getElementById('answeredText');
+    const scoreText = document.getElementById('scoreText');
+    const progressFill = document.getElementById('progressFill');
+
+    let state = [];
+
+    function initState() {
+      state = questions.map(() => ({
+        selected: null,
+        locked: false,
+        correct: false
+      }));
+    }
+
+    function letter(index) {
+      return ['A', 'B', 'C', 'D'][index];
+    }
+
+    function renderQuiz() {
+      quizEl.innerHTML = '';
+      questions.forEach((q, qi) => {
+        const card = document.createElement('section');
+        card.className = 'card';
+
+        const number = document.createElement('div');
+        number.className = 'q-number';
+        number.textContent = `Question ${qi + 1}`;
+        card.appendChild(number);
+
+        const question = document.createElement('div');
+        question.className = 'question';
+        question.innerHTML = `<div>${q.question}</div><div style="margin-top:6px;color:var(--muted);font-weight:600;font-size:0.96rem;">${q.question_th}</div>`;
+        card.appendChild(question);
+
+        const choices = document.createElement('div');
+        choices.className = 'choices';
+
+        q.choices.forEach((choiceText, ci) => {
+          const btn = document.createElement('button');
+          btn.className = 'choice';
+          btn.disabled = state[qi].locked;
+          btn.dataset.qi = qi;
+          btn.dataset.ci = ci;
+
+          if (state[qi].locked) {
+            if (ci === q.answer && state[qi].selected === ci) {
+              btn.classList.add('correct');
+            } else if (ci === q.answer) {
+              btn.classList.add('reveal');
+            } else if (state[qi].selected === ci && ci !== q.answer) {
+              btn.classList.add('wrong');
+            }
+          }
+
+          btn.innerHTML = `<span class="choice-label">${letter(ci)}</span><div style="display:inline-block;vertical-align:top;max-width:calc(100% - 48px);"><div>${choiceText.en}</div><div style="color:var(--muted);font-size:0.93rem;margin-top:3px;">${choiceText.th}</div></div>`;
+          btn.addEventListener('click', () => handleAnswer(qi, ci));
+          choices.appendChild(btn);
+        });
+
+        card.appendChild(choices);
+
+        const feedback = document.createElement('div');
+        const isAnswered = state[qi].locked;
+        feedback.className = 'feedback' + (isAnswered ? ' show ' + (state[qi].correct ? 'correct' : 'wrong') : '');
+        if (isAnswered) {
+          const title = state[qi].correct ? '✅ Correct' : '❌ Incorrect';
+          const picked = `Your answer: ${letter(state[qi].selected)}`;
+          const correct = `Correct answer: ${letter(q.answer)}`;
+          feedback.innerHTML = `
+            <div class="feedback-title">${title}</div>
+            <div>${picked} · ${correct}</div>
+            <div style="margin-top:6px;">${q.explanation}</div>
+          `;
+        }
+        card.appendChild(feedback);
+
+        quizEl.appendChild(card);
+      });
+
+      updateProgress();
+    }
+
+    function handleAnswer(qi, ci) {
+      if (state[qi].locked) return;
+      state[qi].selected = ci;
+      state[qi].locked = true;
+      state[qi].correct = ci === questions[qi].answer;
+      renderQuiz();
+    }
+
+    function updateProgress() {
+      const answered = state.filter(s => s.locked).length;
+      const correct = state.filter(s => s.correct).length;
+      answeredText.textContent = `Answered: ${answered} / ${questions.length}`;
+      scoreText.textContent = `Correct: ${correct}`;
+      progressFill.style.width = `${(answered / questions.length) * 100}%`;
+    }
+
+    function resetQuiz() {
+      initState();
+      renderQuiz();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    initState();
+    renderQuiz();
+  </script>
+</body>
+</html>

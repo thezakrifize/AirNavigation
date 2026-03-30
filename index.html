@@ -1,817 +1,301 @@
 <!DOCTYPE html>
-<html lang="th">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aviation Basic Quiz 60 ข้อ</title>
-  <style>
-    :root {
-      --bg: #0f172a;
-      --panel: #111827;
-      --panel-2: #1f2937;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --accent: #38bdf8;
-      --correct: #16a34a;
-      --wrong: #dc2626;
-      --border: #334155;
-      --card: #0b1220;
-    }
-
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(180deg, #0f172a, #020617);
-      color: var(--text);
-      line-height: 1.5;
-    }
-
-    .container {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 24px;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #0ea5e9, #2563eb);
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.28);
-      margin-bottom: 20px;
-    }
-
-    .hero h1 {
-      margin: 0 0 8px;
-      font-size: 32px;
-    }
-
-    .hero p {
-      margin: 0;
-      color: #e0f2fe;
-    }
-
-    .toolbar {
-      display: grid;
-      grid-template-columns: 1fr auto auto auto;
-      gap: 12px;
-      align-items: center;
-      background: rgba(15, 23, 42, .9);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 16px;
-      position: sticky;
-      top: 12px;
-      z-index: 10;
-      backdrop-filter: blur(8px);
-      margin-bottom: 20px;
-    }
-
-    .stats {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .stat strong { color: var(--text); }
-
-    button {
-      border: none;
-      border-radius: 12px;
-      padding: 10px 16px;
-      color: white;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 700;
-      transition: .2s ease;
-    }
-
-    button:hover { transform: translateY(-1px); }
-    .btn-primary { background: #0284c7; }
-    .btn-secondary { background: #475569; }
-    .btn-success { background: #16a34a; }
-
-    .section-title {
-      margin: 28px 0 14px;
-      font-size: 20px;
-      color: #bae6fd;
-      border-left: 5px solid var(--accent);
-      padding-left: 12px;
-    }
-
-    .quiz {
-      display: grid;
-      gap: 16px;
-    }
-
-    .card {
-      background: rgba(11, 18, 32, .95);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: 0 8px 22px rgba(0, 0, 0, .22);
-    }
-
-    .q-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 12px;
-      align-items: start;
-    }
-
-    .q-num {
-      color: #7dd3fc;
-      font-weight: 700;
-      min-width: 76px;
-    }
-
-    .q-text {
-      flex: 1;
-      font-size: 18px;
-    }
-
-    .choices {
-      display: grid;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .choice {
-      width: 100%;
-      text-align: left;
-      background: var(--panel);
-      color: var(--text);
-      border: 1px solid #374151;
-      border-radius: 12px;
-      padding: 12px 14px;
-      font-size: 15px;
-      font-weight: 500;
-    }
-
-    .choice:hover:not(.locked) {
-      background: #172554;
-      border-color: #3b82f6;
-    }
-
-    .choice.correct {
-      background: rgba(22,163,74,.18);
-      border-color: var(--correct);
-      color: #dcfce7;
-    }
-
-    .choice.wrong {
-      background: rgba(220,38,38,.18);
-      border-color: var(--wrong);
-      color: #fee2e2;
-    }
-
-    .choice.locked {
-      cursor: default;
-    }
-
-    .explanation {
-      display: none;
-      margin-top: 12px;
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-size: 14px;
-      background: #0f172a;
-      border: 1px solid #334155;
-      color: #cbd5e1;
-    }
-
-    .explanation.show { display: block; }
-    .explanation.correct { border-left: 4px solid var(--correct); }
-    .explanation.wrong { border-left: 4px solid var(--wrong); }
-
-    .footer-box {
-      margin-top: 24px;
-      background: rgba(15, 23, 42, .95);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 20px;
-    }
-
-    .result {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .mini {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    @media (max-width: 860px) {
-      .toolbar {
-        grid-template-columns: 1fr;
-      }
-      .q-head {
-        flex-direction: column;
-      }
-      .q-num { min-width: auto; }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Air Navigation Quiz</title>
+<style>
+body { font-family: Arial; padding:20px; background:#f5f5f5;}
+.question { background:white; padding:15px; margin-bottom:10px; border-radius:10px;}
+button { margin:5px; padding:8px 12px; cursor:pointer;}
+.correct { color:green; font-weight:bold;}
+.wrong { color:red; }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="hero">
-      <h1>Aviation Basic Quiz — 60 ข้อ</h1>
-      <p>ครอบคลุม The Form of the Earth, Direction, Evolution of Air Navigation, GNSS และ NDB Navigation</p>
-    </div>
 
-    <div class="toolbar">
-      <div class="stats">
-        <div class="stat">ทำแล้ว: <strong id="answeredCount">0</strong> / 60</div>
-        <div class="stat">ถูก: <strong id="correctCount">0</strong></div>
-        <div class="stat">คะแนน: <strong id="scorePercent">0%</strong></div>
-      </div>
-      <button class="btn-primary" id="checkBtn">สรุปคะแนน</button>
-      <button class="btn-secondary" id="resetBtn">Reset + Shuffle</button>
-      <button class="btn-success" id="topBtn">กลับขึ้นบน</button>
-    </div>
+<h2>✈️ Air Navigation Quiz (40 Questions)</h2>
 
-    <div id="quiz"></div>
+<div id="quiz"></div>
 
-    <div class="footer-box">
-      <div class="result" id="finalResult">ยังไม่ได้สรุปคะแนน</div>
-      <div class="mini">ตอบได้ทันทีทีละข้อ ระบบจะบอกถูกหรือผิดพร้อมเฉลยสั้น ๆ</div>
-    </div>
-  </div>
+<button onclick="resetQuiz()">Reset Quiz</button>
 
-  <script>
-    const questions = [
-      // The Form of the Earth / Direction (1-25)
-      {
-        section: 'The Form of the Earth',
-        q: 'The directions North, East, South, and West are known as:',
-        choices: ['Relative directions', 'Cardinal directions', 'Magnetic directions', 'Grid directions'],
-        answer: 1,
-        explanation: 'Cardinal directions คือ North, East, South, West.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'Which of the following is NOT a cardinal direction?',
-        choices: ['North', 'East', 'West', 'Northeast'],
-        answer: 3,
-        explanation: 'Northeast เป็น intercardinal direction ไม่ใช่ cardinal direction.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'A great circle is a circle whose center is the:',
-        choices: ['North Pole', 'Earth’s center', 'Equator', 'Prime Meridian'],
-        answer: 1,
-        explanation: 'Great circle ต้องมีจุดศูนย์กลางเดียวกับโลก.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'The shortest distance between two points on the surface of the Earth is along a:',
-        choices: ['Rhumb line', 'Small circle', 'Great circle', 'Parallel'],
-        answer: 2,
-        explanation: 'Great circle ให้ระยะสั้นที่สุดบนผิวโลก.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'Which line of latitude is a great circle?',
-        choices: ['30°N', '45°S', '60°N', 'Equator'],
-        answer: 3,
-        explanation: 'มีเพียง Equator เท่านั้นที่เป็น latitude และเป็น great circle.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'A small circle is any circle on the Earth that does NOT have the Earth’s center as its:',
-        choices: ['Pole', 'Origin', 'Latitude', 'Bearing'],
-        answer: 1,
-        explanation: 'Small circle ไม่ผ่านศูนย์กลางของโลก.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'All parallels of latitude except the Equator are:',
-        choices: ['Great circles', 'Meridians', 'Small circles', 'Rhumb bearings'],
-        answer: 2,
-        explanation: 'Latitude ทั้งหมดเป็น small circle ยกเว้น Equator.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'The Equator divides the Earth into the:',
-        choices: ['Eastern and Western Hemispheres', 'Northern and Southern Hemispheres', 'Upper and lower zones', 'Magnetic hemispheres'],
-        answer: 1,
-        explanation: 'Equator แบ่งโลกเป็น Northern และ Southern Hemisphere.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'The Equator is located at:',
-        choices: ['0° longitude', '90° longitude', '0° latitude', '180° latitude'],
-        answer: 2,
-        explanation: 'Equator คือ 0° latitude.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'Meridians run in which direction?',
-        choices: ['East–West', 'North–South', 'Northeast–Southwest', 'Circular only'],
-        answer: 1,
-        explanation: 'Meridians วิ่ง North–South และเชื่อมขั้วโลก.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'A meridian cuts the Equator at:',
-        choices: ['30°', '45°', '90°', '180°'],
-        answer: 2,
-        explanation: 'Meridian ตัด Equator เป็นมุมฉาก 90°.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'A complete great circle is formed when a meridian is combined with its:',
-        choices: ['Parallel', 'Latitude', 'Anti-meridian', 'Magnetic line'],
-        answer: 2,
-        explanation: 'Meridian + anti-meridian จะได้ complete great circle.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'Parallels of latitude always run:',
-        choices: ['North–South', 'East–West', 'To the poles', 'Randomly'],
-        answer: 1,
-        explanation: 'Parallels of latitude วิ่ง East–West.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'Parallels of latitude are ______ to meridians.',
-        choices: ['Parallel', 'Opposite', 'Perpendicular', 'Curved away'],
-        answer: 2,
-        explanation: 'Latitude ตัด meridian เป็นมุมฉาก.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'A rhumb line is a line that cuts all meridians at the same:',
-        choices: ['Distance', 'Altitude', 'Angle', 'Speed'],
-        answer: 2,
-        explanation: 'Rhumb line = constant angle with meridians.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'Which route has a constant bearing?',
-        choices: ['Great circle', 'Rhumb line', 'Small circle only', 'Equatorial track only'],
-        answer: 1,
-        explanation: 'Rhumb line เด่นที่ constant bearing.'
-      },
-      {
-        section: 'The Form of the Earth',
-        q: 'Which route usually gives the shortest distance?',
-        choices: ['Rhumb line', 'Parallel of latitude', 'Great circle', 'Compass route'],
-        answer: 2,
-        explanation: 'Shortest distance = great circle.'
-      },
-      {
-        section: 'Direction',
-        q: 'Course means the:',
-        choices: ['Actual path flown', 'Intended track', 'Direction of aircraft nose', 'Compass correction'],
-        answer: 1,
-        explanation: 'Course คือ intended track ที่ตั้งใจจะบิน.'
-      },
-      {
-        section: 'Direction',
-        q: 'Heading is the direction in which the aircraft’s ______ axis is pointing.',
-        choices: ['Wingtip-to-wingtip', 'Vertical', 'Fore-and-aft', 'Tailplane'],
-        answer: 2,
-        explanation: 'Heading คือทิศที่ fore-and-aft axis หรือหัวเครื่องชี้.'
-      },
-      {
-        section: 'Direction',
-        q: 'Track is the:',
-        choices: ['Intended route', 'Magnetic course', 'Flight path followed by the aircraft', 'Runway direction'],
-        answer: 2,
-        explanation: 'Track คือเส้นทางที่เครื่องบินไปจริง.'
-      },
-      {
-        section: 'Direction',
-        q: 'True direction is referenced to the:',
-        choices: ['Compass north', 'Magnetic north', 'Geographic North Pole', 'Runway north'],
-        answer: 2,
-        explanation: 'True direction อ้างอิง Geographic North Pole.'
-      },
-      {
-        section: 'Direction',
-        q: 'Variation is the angular difference between:',
-        choices: ['Heading and track', 'True north and magnetic north', 'Compass north and runway heading', 'Course and bearing'],
-        answer: 1,
-        explanation: 'Variation = angle between true north and magnetic north.'
-      },
-      {
-        section: 'Direction',
-        q: 'Variation is measured in degrees with the suffix:',
-        choices: ['N or S', 'L or R', 'E or W', 'T or M'],
-        answer: 2,
-        explanation: 'Variation ใช้ East หรือ West.'
-      },
-      {
-        section: 'Direction',
-        q: 'Places of equal magnetic variation are joined by:',
-        choices: ['Agonic lines', 'Isogonals', 'Isohypses', 'Meridians'],
-        answer: 1,
-        explanation: 'Isogonal คือเส้นที่มีค่า variation เท่ากัน.'
-      },
-      {
-        section: 'Direction',
-        q: 'The agonic line is an isogonal where variation is:',
-        choices: ['90°', '180°', 'Maximum', 'Zero'],
-        answer: 3,
-        explanation: 'Agonic line คือเส้นที่ variation = 0°.'
-      },
-      {
-        section: 'Direction',
-        q: 'Deviation is the angle between:',
-        choices: ['True north and magnetic north', 'Compass north and real magnetic north', 'Heading and track', 'Course and track'],
-        answer: 1,
-        explanation: 'Deviation เป็นความคลาดระหว่าง compass north กับ magnetic north จริง.'
-      },
+<script>
 
-      // Evolution (26-35)
-      {
-        section: 'Evolution of Air Navigation',
-        q: 'Operation of an aircraft in flight shall comply with the general rules and either:',
-        choices: ['VFR or IFR', 'NDB or VOR', 'GNSS or INS', 'Day or night rules'],
-        answer: 0,
-        explanation: 'ในอากาศต้องบินตาม VFR หรือ IFR.'
-      },
-      {
-        section: 'Evolution of Air Navigation',
-        q: 'VFR stands for:',
-        choices: ['Variable Flight Route', 'Visual Flight Rules', 'Visual Frequency Rules', 'Vector Flight Rules'],
-        answer: 1,
-        explanation: 'VFR = Visual Flight Rules.'
-      },
-      {
-        section: 'Evolution of Air Navigation',
-        q: 'IFR stands for:',
-        choices: ['Instrument Flight Rules', 'International Flight Rules', 'Internal Flight Route', 'Instrument Frequency Rules'],
-        answer: 0,
-        explanation: 'IFR = Instrument Flight Rules.'
-      },
-      {
-        section: 'Evolution of Air Navigation',
-        q: 'Which of the following is an early navigation method associated with VFR?',
-        choices: ['Pilotage', 'GNSS', 'INS', 'FMS'],
-        answer: 0,
-        explanation: 'Pilotage เป็น early navigation method.'
-      },
-      {
-        section: 'Evolution of Air Navigation',
-        q: 'Celestial navigation uses:',
-        choices: ['Radar returns', 'Visual landmarks', 'Stars and celestial bodies', 'Satellite augmentation'],
-        answer: 2,
-        explanation: 'Celestial navigation ใช้ดวงดาวและวัตถุท้องฟ้า.'
-      },
-      {
-        section: 'Evolution of Air Navigation',
-        q: 'Dead reckoning is based mainly on:',
-        choices: ['Cloud cover only', 'Speed, time, and direction', 'Radar vectors', 'ILS signals'],
-        answer: 1,
-        explanation: 'Dead reckoning ใช้ speed + time + direction.'
-      },
-      {
-        section: 'Evolution of Air Navigation',
-        q: 'Which of the following belongs mainly to IFR navigation?',
-        choices: ['Pilotage', 'Celestial navigation', 'Radio navigation', 'Following rivers'],
-        answer: 2,
-        explanation: 'Radio navigation เป็นระบบฝั่ง IFR.'
-      },
-      {
-        section: 'Evolution of Air Navigation',
-        q: 'GNSS is listed in the slide as part of:',
-        choices: ['VFR compliance', 'IFR compliance', 'Only military compliance', 'Visual-only operations'],
-        answer: 1,
-        explanation: 'GNSS อยู่ในกลุ่ม IFR compliance.'
-      },
-      {
-        section: 'Evolution of Air Navigation',
-        q: 'INS stands for:',
-        choices: ['Internal Navigation Service', 'Inertial Navigation System', 'Integrated Navigation Signal', 'Instrument Navigation Service'],
-        answer: 1,
-        explanation: 'INS = Inertial Navigation System.'
-      },
-      {
-        section: 'Evolution of Air Navigation',
-        q: 'FMS and autopilot systems represent navigation evolution toward:',
-        choices: ['Manual drift only', 'Automation', 'Celestial methods', 'Visual-only procedures'],
-        answer: 1,
-        explanation: 'FMS + autopilot แทนยุค automation.'
-      },
+const quizData = [
+{
+q:"Which navigation system does NOT rely on ground-based transmitters?",
+a:["VOR","NDB","GNSS","ILS"],
+correct:2,
+explain:"GNSS is satellite-based."
+},
+{
+q:"A great circle route is preferred because it:",
+a:["Maintains constant heading","Shortest distance","Avoids variation","Easier navigation"],
+correct:1,
+explain:"Great circle = shortest path."
+},
+{
+q:"A rhumb line is a path that:",
+a:["Shortest distance","Constant bearing","Only near equator","Always straight"],
+correct:1,
+explain:"Rhumb line keeps constant direction."
+},
+{
+q:"A meridian is:",
+a:["Parallel line","Half great circle","Small circle","Rhumb line"],
+correct:1,
+explain:"Meridian connects poles."
+},
+{
+q:"The Equator is:",
+a:["Small circle","Rhumb line only","Great circle","Meridian"],
+correct:2,
+explain:"Only parallel that is great circle."
+},
+{
+q:"Course is:",
+a:["Actual path","Aircraft direction","Intended track","Magnetic reading"],
+correct:2,
+explain:"Course = planned direction."
+},
+{
+q:"Track is:",
+a:["Planned route","Actual path","Heading","Bearing"],
+correct:1,
+explain:"Track = real path."
+},
+{
+q:"Heading is:",
+a:["Actual path","Aircraft nose direction","Course","Track"],
+correct:1,
+explain:"Where aircraft points."
+},
+{
+q:"Without wind, heading equals:",
+a:["Track","Variation","Course always","Altitude"],
+correct:0,
+explain:"No wind = no drift."
+},
+{
+q:"Crosswind causes difference between:",
+a:["Course & heading","Heading & track","Track & variation","Speed & heading"],
+correct:1,
+explain:"Wind drift."
+},
+{
+q:"True direction refers to:",
+a:["Magnetic north","Compass north","Geographic north","Grid north"],
+correct:2,
+explain:"True = geographic north."
+},
+{
+q:"Variation is angle between:",
+a:["Compass & magnetic","Magnetic & true","Track & heading","Course & track"],
+correct:1,
+explain:"Variation = True vs Magnetic."
+},
+{
+q:"Deviation is caused by:",
+a:["Wind","Aircraft magnetism","Latitude","Speed"],
+correct:1,
+explain:"Internal aircraft error."
+},
+{
+q:"Agonic line means:",
+a:["No deviation","No variation","No wind","No compass"],
+correct:1,
+explain:"Variation = 0."
+},
+{
+q:"Isogonals show:",
+a:["Altitude","Variation","Wind","Speed"],
+correct:1,
+explain:"Lines of equal variation."
+},
+{
+q:"Crossing which line changes date?",
+a:["Equator","Greenwich","IDL","90E"],
+correct:2,
+explain:"International Date Line."
+},
+{
+q:"Latitude measures:",
+a:["East-West","North-South","Height","Speed"],
+correct:1,
+explain:"Latitude = N/S."
+},
+{
+q:"Longitude measures:",
+a:["North-South","East-West","Height","Bearing"],
+correct:1,
+explain:"Longitude = E/W."
+},
+{
+q:"NDB transmits:",
+a:["Directional","Omnidirectional","Vertical only","Radar"],
+correct:1,
+explain:"Equal in all directions."
+},
+{
+q:"ADF gives:",
+a:["Distance","Bearing","Speed","Altitude"],
+correct:1,
+explain:"Relative bearing."
+},
+{
+q:"VOR provides:",
+a:["Distance","Radial","Speed","Altitude"],
+correct:1,
+explain:"Magnetic bearing."
+},
+{
+q:"VOR frequency:",
+a:["LF","MF","VHF","UHF"],
+correct:2,
+explain:"108–117.95 MHz."
+},
+{
+q:"DME gives:",
+a:["Speed","Distance","Bearing","Altitude"],
+correct:1,
+explain:"Slant range."
+},
+{
+q:"DME frequency:",
+a:["LF","MF","VHF","UHF"],
+correct:3,
+explain:"UHF band."
+},
+{
+q:"ILS is used for:",
+a:["En-route","Approach","Speed","Weather"],
+correct:1,
+explain:"Precision landing."
+},
+{
+q:"Localizer gives:",
+a:["Vertical","Horizontal","Speed","Distance"],
+correct:1,
+explain:"Lateral guidance."
+},
+{
+q:"Glideslope gives:",
+a:["Horizontal","Vertical","Speed","Bearing"],
+correct:1,
+explain:"Vertical path."
+},
+{
+q:"Marker beacons indicate:",
+a:["Speed","Distance on approach","Altitude","Heading"],
+correct:1,
+explain:"Approach position."
+},
+{
+q:"GNSS stands for:",
+a:["Global Nav Signal","Global Navigation Satellite System","Ground Nav System","General Nav"],
+correct:1,
+explain:"Satellite navigation."
+},
+{
+q:"GNSS needs augmentation because:",
+a:["Weak signal","Accuracy limits","No position","Low altitude"],
+correct:1,
+explain:"Improve accuracy/integrity."
+},
+{
+q:"ABAS/GBAS/SBAS improve:",
+a:["Speed","Accuracy","Fuel","Altitude"],
+correct:1,
+explain:"Integrity & accuracy."
+},
+{
+q:"Radio altimeter works by:",
+a:["Pressure","Time delay","Frequency compare","GPS"],
+correct:1,
+explain:"Signal reflection time."
+},
+{
+q:"System NOT limited by LOS:",
+a:["VOR","ILS","GNSS","DME"],
+correct:2,
+explain:"Satellite coverage."
+},
+{
+q:"Great circle requires:",
+a:["Constant heading","Changing heading","No correction","Low altitude"],
+correct:1,
+explain:"Heading changes."
+},
+{
+q:"Rhumb line advantage:",
+a:["Shortest","Constant heading","Less fuel","GPS only"],
+correct:1,
+explain:"Easy navigation."
+},
+{
+q:"Dead reckoning uses:",
+a:["Radar","Time & speed","GPS","Radio only"],
+correct:1,
+explain:"Basic nav method."
+},
+{
+q:"Pilotage depends on:",
+a:["Radar","Visual landmarks","GPS","Altitude"],
+correct:1,
+explain:"Visual nav."
+},
+{
+q:"WGS-84 ellipsoid is:",
+a:["Real Earth","Mathematical model","Sea level","Magnetic field"],
+correct:1,
+explain:"Reference model."
+},
+{
+q:"Geoid represents:",
+a:["Perfect sphere","Mean sea level","Ellipsoid","Magnetic field"],
+correct:1,
+explain:"Irregular surface."
+},
+{
+q:"Difference between ellipsoid & geoid is:",
+a:["Variation","Deviation","Geoid undulation","Altitude"],
+correct:2,
+explain:"Height difference."
+}
+];
 
-      // GNSS (36-48)
-      {
-        section: 'GNSS',
-        q: 'GNSS stands for:',
-        choices: ['Global Navigation Signal System', 'Ground Navigation Satellite Service', 'Global Navigation Satellite System', 'General Navigation Satellite System'],
-        answer: 2,
-        explanation: 'GNSS = Global Navigation Satellite System.'
-      },
-      {
-        section: 'GNSS',
-        q: 'GNSS is a worldwide ______ and time determination system.',
-        choices: ['Weather', 'Position', 'Speed', 'Radar'],
-        answer: 1,
-        explanation: 'GNSS ให้ position และ time.'
-      },
-      {
-        section: 'GNSS',
-        q: 'GNSS includes one or more satellite constellations, aircraft receivers, and system integrity:',
-        choices: ['Suppression', 'Monitoring', 'Cancellation', 'Drift'],
-        answer: 1,
-        explanation: 'องค์ประกอบมี constellations, receivers, and integrity monitoring.'
-      },
-      {
-        section: 'GNSS',
-        q: 'Required navigation performance mentioned on the slide is abbreviated as:',
-        choices: ['RVR', 'RNAV', 'RNP', 'RVSM'],
-        answer: 2,
-        explanation: 'RNP = Required Navigation Performance.'
-      },
-      {
-        section: 'GNSS',
-        q: 'Which of the following is NOT one of the four GNSS constellations shown?',
-        choices: ['GPS', 'Galileo', 'GLONASS', 'VOR'],
-        answer: 3,
-        explanation: 'VOR ไม่ใช่ GNSS constellation.'
-      },
-      {
-        section: 'GNSS',
-        q: 'GPS belongs to:',
-        choices: ['EU', 'USA', 'Russia', 'China'],
-        answer: 1,
-        explanation: 'GPS เป็นของสหรัฐอเมริกา.'
-      },
-      {
-        section: 'GNSS',
-        q: 'Galileo belongs to:',
-        choices: ['Russia', 'China', 'EU', 'USA'],
-        answer: 2,
-        explanation: 'Galileo เป็นระบบของสหภาพยุโรป.'
-      },
-      {
-        section: 'GNSS',
-        q: 'GLONASS belongs to:',
-        choices: ['China', 'Russia', 'USA', 'EU'],
-        answer: 1,
-        explanation: 'GLONASS เป็นของรัสเซีย.'
-      },
-      {
-        section: 'GNSS',
-        q: 'BeiDou belongs to:',
-        choices: ['Japan', 'China', 'USA', 'India'],
-        answer: 1,
-        explanation: 'BeiDou เป็นของจีน.'
-      },
-      {
-        section: 'GNSS',
-        q: 'The slide states that existing core satellite constellations were NOT designed to meet civil aviation performance requirements, so signals require:',
-        choices: ['Magnetic correction', 'Augmentation', 'Visual alignment', 'ADF tuning'],
-        answer: 1,
-        explanation: 'Core GNSS alone ไม่พอ ต้องมี augmentation.'
-      },
-      {
-        section: 'GNSS',
-        q: 'Which augmentation is aircraft-based?',
-        choices: ['ABAS', 'GBAS', 'SBAS', 'IBLS'],
-        answer: 0,
-        explanation: 'ABAS = Aircraft-Based Augmentation System.'
-      },
-      {
-        section: 'GNSS',
-        q: 'Which augmentation is ground-based?',
-        choices: ['ABAS', 'GBAS', 'SBAS', 'GNSS'],
-        answer: 1,
-        explanation: 'GBAS = Ground-Based Augmentation System.'
-      },
-      {
-        section: 'GNSS',
-        q: 'Which augmentation is satellite-based?',
-        choices: ['ABAS', 'GBAS', 'SBAS', 'INS'],
-        answer: 2,
-        explanation: 'SBAS = Satellite-Based Augmentation System.'
-      },
+function loadQuiz(){
+let container=document.getElementById("quiz");
+container.innerHTML="";
+quizData.forEach((q,i)=>{
+let div=document.createElement("div");
+div.className="question";
+let html=`<p>${i+1}. ${q.q}</p>`;
+q.a.forEach((opt,j)=>{
+html+=`<button onclick="check(${i},${j},this)">${opt}</button>`;
+});
+html+=`<p id="res${i}"></p>`;
+div.innerHTML=html;
+container.appendChild(div);
+});
+}
 
-      // NDB (49-60)
-      {
-        section: 'NDB Navigation',
-        q: 'NDB stands for:',
-        choices: ['Non Directional Beacon', 'North Direction Beacon', 'Navigation Data Beacon', 'Non Digital Beacon'],
-        answer: 0,
-        explanation: 'NDB = Non Directional Beacon.'
-      },
-      {
-        section: 'NDB Navigation',
-        q: 'NDB are ground-based transmitters that transmit radio energy:',
-        choices: ['In one selected direction', 'Equally in all directions', 'Only toward runway', 'Only toward aircraft tail'],
-        answer: 1,
-        explanation: 'NDB เป็น omni-directional transmitter.'
-      },
-      {
-        section: 'NDB Navigation',
-        q: 'NDB operates in which frequency band?',
-        choices: ['VHF only', 'UHF only', 'MF or LF', 'SHF only'],
-        answer: 2,
-        explanation: 'NDB ใช้ MF/LF band.'
-      },
-      {
-        section: 'NDB Navigation',
-        q: 'The signal of an NDB contains a coded element used for station identification in:',
-        choices: ['Binary digits', 'Voice phrases', 'Morse code', 'Radar pulses'],
-        answer: 2,
-        explanation: 'การ identify สถานีใช้ Morse code.'
-      },
-      {
-        section: 'NDB Navigation',
-        q: 'The airborne system used with NDB is the:',
-        choices: ['DME', 'ADF', 'VOR indicator', 'INS'],
-        answer: 1,
-        explanation: 'เครื่องรับบนอากาศคือ ADF.'
-      },
-      {
-        section: 'NDB Navigation',
-        q: 'ADF identifies the ______ bearing of aircraft from an NDB beacon.',
-        choices: ['True', 'Magnetic', 'Relative', 'Grid'],
-        answer: 2,
-        explanation: 'ADF แสดง relative bearing.'
-      },
-      {
-        section: 'NDB Navigation',
-        q: 'Locator Beacon is used mainly for:',
-        choices: ['Long range en-route navigation', 'Intermediate approach guidance', 'Precision glide guidance', 'Satellite augmentation'],
-        answer: 1,
-        explanation: 'Locator beacon ใช้ช่วย intermediate approach guidance.'
-      },
-      {
-        section: 'NDB Navigation',
-        q: 'The maximum range of a Locator Beacon is approximately:',
-        choices: ['5–10 NM', '15–25 NM', '30–40 NM', '50 NM'],
-        answer: 1,
-        explanation: 'Locator beacon short range ประมาณ 15–25 NM.'
-      },
-      {
-        section: 'NDB Navigation',
-        q: 'Homing Beacon primarily serves as an aid for:',
-        choices: ['Precision landing only', 'Approach and holding', 'Satellite tracking', 'Ground surveillance'],
-        answer: 1,
-        explanation: 'Homing beacon ใช้หลัก ๆ ใน approach และ holding.'
-      },
-      {
-        section: 'NDB Navigation',
-        q: 'The maximum range of a Homing Beacon is approximately:',
-        choices: ['15 NM', '25 NM', '50 NM', '100 NM'],
-        answer: 2,
-        explanation: 'Homing beacon มี maximum range ประมาณ 50 NM.'
-      },
-      {
-        section: 'NDB Navigation',
-        q: 'The general frequency range for NDB shown on the slide is:',
-        choices: ['108–117 MHz', '190 to 1750 kHz', '960–1215 MHz', '3–30 GHz'],
-        answer: 1,
-        explanation: 'ช่วงทั่วไปคือ 190–1750 kHz.'
-      },
-      {
-        section: 'NDB Navigation',
-        q: 'The formula shown on the slide is MB = MH + RB. In this formula, RB stands for:',
-        choices: ['Relative Bearing', 'Radio Beam', 'Runway Bearing', 'Reference Bearing'],
-        answer: 0,
-        explanation: 'RB = Relative Bearing.'
-      }
-    ];
+function check(i,j,btn){
+let res=document.getElementById("res"+i);
+if(j===quizData[i].correct){
+res.innerHTML=`<span class="correct">✔ Correct</span> - ${quizData[i].explain}`;
+}else{
+res.innerHTML=`<span class="wrong">✘ Wrong</span> - ${quizData[i].explain}`;
+}
+}
 
-    const quizEl = document.getElementById('quiz');
-    const answeredCountEl = document.getElementById('answeredCount');
-    const correctCountEl = document.getElementById('correctCount');
-    const scorePercentEl = document.getElementById('scorePercent');
-    const finalResultEl = document.getElementById('finalResult');
-    const resetBtn = document.getElementById('resetBtn');
-    const checkBtn = document.getElementById('checkBtn');
-    const topBtn = document.getElementById('topBtn');
+function resetQuiz(){
+loadQuiz();
+}
 
-    let state = [];
+loadQuiz();
 
-    function shuffleArray(arr) {
-      const copy = [...arr];
-      for (let i = copy.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [copy[i], copy[j]] = [copy[j], copy[i]];
-      }
-      return copy;
-    }
+</script>
 
-    function buildQuiz() {
-      quizEl.innerHTML = '';
-      state = questions.map((q, idx) => {
-        const order = shuffleArray(q.choices.map((choice, i) => ({ choice, originalIndex: i })));
-        const remappedAnswer = order.findIndex(x => x.originalIndex === q.answer);
-        return {
-          selected: null,
-          locked: false,
-          correct: false,
-          order,
-          remappedAnswer,
-          qIndex: idx
-        };
-      });
-
-      let currentSection = '';
-      questions.forEach((q, idx) => {
-        if (q.section !== currentSection) {
-          currentSection = q.section;
-          const sectionTitle = document.createElement('div');
-          sectionTitle.className = 'section-title';
-          sectionTitle.textContent = currentSection;
-          quizEl.appendChild(sectionTitle);
-        }
-
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.dataset.index = idx;
-
-        const qHead = document.createElement('div');
-        qHead.className = 'q-head';
-        qHead.innerHTML = `
-          <div class="q-num">ข้อ ${idx + 1}</div>
-          <div class="q-text">${q.q}</div>
-        `;
-        card.appendChild(qHead);
-
-        const choicesWrap = document.createElement('div');
-        choicesWrap.className = 'choices';
-
-        state[idx].order.forEach((item, choiceIndex) => {
-          const btn = document.createElement('button');
-          btn.className = 'choice';
-          btn.innerHTML = `<strong>${String.fromCharCode(65 + choiceIndex)}.</strong> ${item.choice}`;
-          btn.addEventListener('click', () => answerQuestion(idx, choiceIndex, btn, card));
-          choicesWrap.appendChild(btn);
-        });
-
-        const explanation = document.createElement('div');
-        explanation.className = 'explanation';
-        explanation.id = `exp-${idx}`;
-
-        card.appendChild(choicesWrap);
-        card.appendChild(explanation);
-        quizEl.appendChild(card);
-      });
-
-      updateStats();
-      finalResultEl.textContent = 'ยังไม่ได้สรุปคะแนน';
-    }
-
-    function answerQuestion(qIdx, selectedChoice, clickedBtn, card) {
-      const qState = state[qIdx];
-      if (qState.locked) return;
-
-      qState.selected = selectedChoice;
-      qState.locked = true;
-      qState.correct = selectedChoice === qState.remappedAnswer;
-
-      const buttons = card.querySelectorAll('.choice');
-      buttons.forEach((btn, i) => {
-        btn.classList.add('locked');
-        if (i === qState.remappedAnswer) btn.classList.add('correct');
-        if (i === selectedChoice && selectedChoice !== qState.remappedAnswer) btn.classList.add('wrong');
-      });
-
-      const exp = document.getElementById(`exp-${qIdx}`);
-      exp.className = `explanation show ${qState.correct ? 'correct' : 'wrong'}`;
-      exp.innerHTML = `${qState.correct ? '✅ ตอบถูก' : '❌ ตอบผิด'} — เฉลย: <strong>${String.fromCharCode(65 + qState.remappedAnswer)}</strong>. ${questions[qIdx].orderText || questions[qIdx].explanation}`;
-
-      updateStats();
-    }
-
-    function updateStats() {
-      const answered = state.filter(s => s.locked).length;
-      const correct = state.filter(s => s.correct).length;
-      const percent = Math.round((correct / questions.length) * 100);
-      answeredCountEl.textContent = answered;
-      correctCountEl.textContent = correct;
-      scorePercentEl.textContent = `${percent}%`;
-    }
-
-    function summarizeScore() {
-      const answered = state.filter(s => s.locked).length;
-      const correct = state.filter(s => s.correct).length;
-      const wrong = answered - correct;
-      const percent = Math.round((correct / questions.length) * 100);
-
-      let level = 'เริ่มต้น';
-      if (percent >= 85) level = 'ดีมาก';
-      else if (percent >= 70) level = 'ดี';
-      else if (percent >= 50) level = 'พอใช้';
-
-      finalResultEl.textContent = `คะแนน ${correct}/${questions.length} (${percent}%) — ตอบแล้ว ${answered} ข้อ, ผิด ${wrong} ข้อ, ระดับ: ${level}`;
-    }
-
-    resetBtn.addEventListener('click', buildQuiz);
-    checkBtn.addEventListener('click', summarizeScore);
-    topBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    buildQuiz();
-  </script>
 </body>
 </html>
